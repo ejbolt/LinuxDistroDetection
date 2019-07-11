@@ -7,7 +7,7 @@ check_distro()
 	if [ -f "/etc/os-release" ]
 	then
 		echo "/etc/os-release found"
-		DISTRO=$(cat /etc/os-release | head -n 1 | cut -d "=" -f 2 | cut -d " " -f 1 | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]' | tr -d '\"')
+		DISTRO=$(cat /etc/os-release | head -n 1 | cut -d "=" -f 2 | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]' | tr -d '\"')
 
 	# hostnamectl is still newer, but a nice fallback and exists on some systems not running systemd (ex: Ubuntu 14.04
 	elif [ -x "$( command -v hostnamectl )" ]
