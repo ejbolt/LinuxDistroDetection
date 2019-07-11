@@ -20,7 +20,7 @@ check_distro()
 	if [[ ${DISTRO} == *"arch"* || ${DISTRO} == *"manjaro"* ]]
 	then
 		echo "Distro is ArchLinux based"
-	elif [[ ${DISTRO} == *"centos"* || ${DISTRO} == *"fedora"* || ${DISTRO} == *"rhel"* ]]
+	elif [[ ${DISTRO} == *"centos"* || ${DISTRO} == *"fedora"* || ${DISTRO} == *"redhat"* ]]
 	then
 	    echo "Distro is RedHat based"
 	elif [[ ${DISTRO} == *"debian"* || ${DISTRO} == *"ubuntu"* || ${DISTRO} == *"mint"* ]]
