@@ -7,25 +7,40 @@ check_distro()
 	if [ -f "/etc/os-release" ]
 	then
             echo "/etc/os-release found"
-            DISTRO=$(cat /etc/os-release | head -n 1 | cut -d "=" -f 2 | tr '[:upper:]' '[:lower:]' | tr -d '\"')
+            DISTRO_CHECK=$(cat /etc/os-release | head -n 1 | cut -d "=" -f 2 | tr '[:upper:]' '[:lower:]' | tr -d '\"')
 		
 	# hostnamectl is still newer, but a nice fallback and exists on some systems not running systemd (ex: Ubuntu 14.04
 	elif [ -x "$( command -v hostnamectl )" ]
 	then
             echo "hostnamectl found"
-            DISTRO=$(hostnamectl | grep "Operating System" | cut -d ":" -f 2 | sed -e 's/^[[:space:]]*//' | tr '[:upper:]' '[:lower:]')
+            DISTRO_CHECK=$(hostnamectl | grep "Operating System" | cut -d ":" -f 2 | sed -e 's/^[[:space:]]*//' | tr '[:upper:]' '[:lower:]')
 
 	fi
 
-	if [[ ${DISTRO} == *"arch"* || ${DISTRO} == *"manjaro"* ]]
+	if [[ ${DISTRO_CHECK} == *"arch"* ]]
 	then
-	    echo "Distro is ArchLinux based"
-	elif [[ ${DISTRO} == *"centos"* || ${DISTRO} == *"fedora"* || ${DISTRO} == *"rhel"* ]]
+		DISTRO="arch"
+	elif [[ ${DISTRO_CHECK} == *"manjaro"* ]]
 	then
-	    echo "Distro is RedHat based"
-	elif [[ ${DISTRO} == *"debian"* || ${DISTRO} == *"ubuntu"* || ${DISTRO} == *"mint"* ]]
+	    echo "manjaro"
+	elif [[ ${DISTRO_CHECK} == *"centos"* ]]
 	then
-            echo "Distro is Debian-based"
+		DISTRO="centos"
+	elif [[ ${DISTRO_CHECK} == *"fedora"* ]]
+	then
+		DISTRO="fedora"
+	elif [[ ${DISTRO_CHECK} == *"rhel"* ]]
+	then
+	    DISTRO="rhel"
+	elif [[ ${DISTRO_CHECK} == *"debian"* ]]
+	then
+		DISTRO="debian"
+	elif [[ ${DISTRO_CHECK} == *"ubuntu"* ]]
+	then
+		DISTRO="ubuntu"
+	elif [[ ${DISTRO_CHECK} == *"mint"* ]]
+	then
+        DISTRO="mint"
 	fi
 
 	echo "${DISTRO}"
