@@ -6,13 +6,11 @@ check_distro()
 	# /etc/os-release is the newer standard w/ systemd, look for that first
 	if [ -f "/etc/os-release" ]
 	then
-            echo "/etc/os-release found"
             DISTRO_CHECK=$(cat /etc/os-release | head -n 1 | cut -d "=" -f 2 | tr '[:upper:]' '[:lower:]' | tr -d '\"')
 		
 	# hostnamectl is still newer, but a nice fallback and exists on some systems not running systemd (ex: Ubuntu 14.04
 	elif [ -x "$( command -v hostnamectl )" ]
 	then
-            echo "hostnamectl found"
             DISTRO_CHECK=$(hostnamectl | grep "Operating System" | cut -d ":" -f 2 | sed -e 's/^[[:space:]]*//' | tr '[:upper:]' '[:lower:]')
 
 	fi
